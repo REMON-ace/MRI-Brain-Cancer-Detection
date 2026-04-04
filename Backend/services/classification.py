@@ -20,7 +20,7 @@ def get_classifier():
             device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
             model = BrainTumorCNN()
             
-            model.load_state_dict(torch.load(MODEL_PATH, map_location=device))
+            model.load_state_dict(torch.load(MODEL_PATH, map_location=device, weights_only=True))
             model.eval()
             model.to(device)
             _classifier = model

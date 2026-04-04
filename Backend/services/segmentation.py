@@ -28,7 +28,7 @@ def get_model():
 
             # Load state dict locally
             state_dict = torch.load(
-                MODEL_PATH, map_location=torch.device('cpu'))
+                MODEL_PATH, map_location=torch.device('cpu'), weights_only=True)
             _model.load_state_dict(state_dict)
             _model.eval()
         except ImportError:

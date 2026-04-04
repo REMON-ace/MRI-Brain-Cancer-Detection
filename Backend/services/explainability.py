@@ -11,8 +11,8 @@ import services.classification as cls
 class ResNetGradCAM:
     def __init__(self, model):
         self.model = model
-        # For ResNet-18, the last convolutional layer is layer4[1].conv2
-        self.target_layer = self.model.layer4[1].conv2
+        # For our custom BrainTumorCNN, the last convolutional layer is conv4
+        self.target_layer = self.model.conv4
         self.gradients = None
         self.activations = None
         
