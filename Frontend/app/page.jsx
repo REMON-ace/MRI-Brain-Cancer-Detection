@@ -1,12 +1,19 @@
 "use client";
 
 import { motion, AnimatePresence } from 'framer-motion';
+<<<<<<< HEAD
 import { UploadCloud, Activity, Brain, Zap, HeartPulse, FileText, Upload, ScanSearch, UserPlus, QrCode, AlertCircle } from 'lucide-react';
+=======
+import { UploadCloud, Activity, Brain, Zap, HeartPulse, FileText, Upload, ScanSearch, UserPlus, QrCode } from 'lucide-react';
+>>>>>>> features
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import PatientScanner from "../components/PatientScanner";
 import { generatePatientId, savePatient } from "../lib/store";
+<<<<<<< HEAD
 import { predictMRI } from "../lib/api";
+=======
+>>>>>>> features
 
 export default function Home() {
   const router = useRouter();
@@ -18,12 +25,19 @@ export default function Home() {
   const [regName, setRegName] = useState('');
   const [regAge, setRegAge] = useState('');
   const [newPatientId, setNewPatientId] = useState('');
+<<<<<<< HEAD
+=======
+  const [manualId, setManualId] = useState('');
+>>>>>>> features
   
   // Upload States
   const [isUploading, setIsUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
+<<<<<<< HEAD
   const [uploadError, setUploadError] = useState(null);
   const [selectedFile, setSelectedFile] = useState(null);
+=======
+>>>>>>> features
 
   const handleScanSuccess = (patientId) => {
     router.push(`/results?id=${patientId}`);
@@ -37,6 +51,7 @@ export default function Home() {
     setViewState('success');
   };
 
+<<<<<<< HEAD
   const handleUploadAfterRegister = async (file) => {
     if (!file) return;
     setUploadError(null);
@@ -83,6 +98,49 @@ export default function Home() {
       setUploadProgress(0);
       setUploadError(err.message || 'Upload failed. Please try again.');
     }
+=======
+  const handleUploadAfterRegister = () => {
+    setIsUploading(true);
+    setUploadProgress(0);
+    
+    const interval = setInterval(() => {
+      setUploadProgress(prev => {
+        const next = prev + Math.random() * 20;
+        if (next >= 100) {
+          clearInterval(interval);
+          
+          const mockResult = Math.random() > 0.5 ? 'Detected' : 'Not Detected';
+          const mockConfidence = Math.random() * 20 + 80;
+          const mockArea = mockResult === 'Detected' ? Math.random() * 30 + 50 : 0;
+          
+          const newPatient = {
+            id: newPatientId,
+            name: regName,
+            age: parseInt(regAge, 10),
+            status: mockResult,
+            confidence: mockConfidence,
+            lastScanDate: new Date().toISOString().split('T')[0],
+            history: [
+              {
+                id: `SCAN-${Math.floor(Math.random() * 1000)}`,
+                date: new Date().toISOString().split('T')[0],
+                type: 'T2-Weighted MRI',
+                status: mockResult,
+                confidence: mockConfidence,
+                tumorArea: mockArea,
+                details: mockResult === 'Detected' ? `Meningioma indicators present. Estimated area: ${mockArea.toFixed(1)} mm².` : 'Clear scan'
+              }
+            ]
+          };
+          
+          savePatient(newPatient);
+          setTimeout(() => router.push(`/results?id=${newPatientId}`), 400);
+          return 100;
+        }
+        return next;
+      });
+    }, 400);
+>>>>>>> features
   };
 
   return (
@@ -153,7 +211,11 @@ export default function Home() {
                 <Brain className="w-32 h-32 text-slate-800" />
                 
                 {/* Mock Scan Overlay Effect */}
+<<<<<<< HEAD
                 <div className="absolute inset-0 bg-[url('https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Normal_axial_T2-weighted_MR_image_of_the_brain.jpg/640px-Normal_axial_T2-weighted_MR_image_of_the_brain.jpg')] bg-cover bg-center opacity-40 mix-blend-screen" />
+=======
+                <div className="absolute inset-0 bg-[url('/mri-mock.jpg')] bg-cover bg-center opacity-40 mix-blend-screen" />
+>>>>>>> features
                 
                 {/* AI Bounding Box Tracker */}
                 <motion.div 
@@ -323,6 +385,29 @@ export default function Home() {
                     onCancel={() => setViewState('default')} 
                   />
                   <div className="mt-8 border-t border-white/10 pt-8">
+<<<<<<< HEAD
+=======
+                    <p className="text-slate-400 text-sm mb-4">Or enter Patient ID manually:</p>
+                    <form 
+                      onSubmit={(e) => { e.preventDefault(); if (manualId) handleScanSuccess(manualId); }}
+                      className="flex gap-2 justify-center mb-8 max-w-sm mx-auto"
+                    >
+                      <input 
+                        type="text" 
+                        value={manualId}
+                        onChange={(e) => setManualId(e.target.value)}
+                        placeholder="e.g. VN-123456"
+                        className="flex-1 bg-slate-900 border border-white/10 rounded-xl px-4 py-2 text-white focus:outline-none focus:border-cyan-500/50"
+                      />
+                      <button 
+                        type="submit"
+                        className="px-6 py-2 bg-white/10 hover:bg-white/20 text-white rounded-xl font-medium transition-all"
+                      >
+                        Login
+                      </button>
+                    </form>
+
+>>>>>>> features
                     <p className="text-slate-400 text-sm mb-4">Don't have a card?</p>
                     <button 
                       onClick={() => setViewState('register')}
@@ -407,12 +492,15 @@ export default function Home() {
                     </div>
                   </motion.div>
 
+<<<<<<< HEAD
                   {uploadError && (
                     <div className="mb-4 flex items-start gap-2 p-3 bg-red-500/10 border border-red-500/20 rounded-xl text-red-400 text-sm">
                       <AlertCircle className="w-4 h-4 mt-0.5 shrink-0" />
                       <span>{uploadError}</span>
                     </div>
                   )}
+=======
+>>>>>>> features
                   {!isUploading ? (
                     <motion.div 
                       whileHover={{ scale: 1.01 }}
@@ -423,16 +511,25 @@ export default function Home() {
                         accept=".dcm,.jpg,.jpeg,.png"
                         className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
                         onChange={(e) => {
+<<<<<<< HEAD
                           const file = e.target.files?.[0];
                           if (file) {
                             setSelectedFile(file);
                             handleUploadAfterRegister(file);
+=======
+                          if (e.target.files && e.target.files.length > 0) {
+                            handleUploadAfterRegister();
+>>>>>>> features
                           }
                         }}
                       />
                       <UploadCloud className="w-10 h-10 text-cyan-400 mx-auto mb-4 group-hover:scale-110 transition-transform" />
                       <h4 className="text-white font-medium mb-1">Upload Initial MRI Scan</h4>
+<<<<<<< HEAD
                       <p className="text-xs text-slate-500 mb-6">Drag & Drop or Click to Select · JPG / PNG / DICOM</p>
+=======
+                      <p className="text-xs text-slate-500 mb-6">Drag & Drop or Click to Select</p>
+>>>>>>> features
                       <button className="px-8 py-3 bg-white/10 group-hover:bg-cyan-500/20 rounded-full text-white font-medium transition-all text-sm pointer-events-none">
                         Select File
                       </button>
@@ -440,6 +537,10 @@ export default function Home() {
                   ) : (
                     <div className="flex-1 flex flex-col items-center justify-center gap-8 py-10">
                       <Brain className="w-16 h-16 text-purple-400 animate-pulse" />
+<<<<<<< HEAD
+=======
+                      
+>>>>>>> features
                       <div className="w-full">
                         <div className="flex justify-between text-sm mb-2 text-slate-300 font-mono">
                           <span>Analyzing Scan...</span>
@@ -452,7 +553,11 @@ export default function Home() {
                           />
                         </div>
                       </div>
+<<<<<<< HEAD
                       <p className="text-slate-400 text-sm">Running AI pipeline — please wait...</p>
+=======
+                      <p className="text-slate-400 text-sm">Processing neural networks...</p>
+>>>>>>> features
                     </div>
                   )}
                 </motion.div>

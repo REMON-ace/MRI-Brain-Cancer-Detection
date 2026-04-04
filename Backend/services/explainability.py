@@ -18,7 +18,17 @@ class ResNetGradCAM:
 
     def __init__(self, model):
         self.model = model
+<<<<<<< HEAD
         self.gradients  = None
+=======
+<<<<<<< HEAD
+        # For our custom BrainTumorCNN, the last convolutional layer is conv4
+        self.target_layer = self.model.conv4
+        self.gradients = None
+=======
+        self.gradients  = None
+>>>>>>> 9ee1c27 (Connected the backend and the frontend together)
+>>>>>>> features
         self.activations = None
         self._handles    = []
 

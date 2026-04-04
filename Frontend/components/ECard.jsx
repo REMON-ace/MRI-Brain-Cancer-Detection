@@ -96,7 +96,7 @@ export default function ECard({ patient, onDownload }) {
               <span>{patient.age} years old</span>
             </div>
           </div>
-          <div className="bg-slate-900/80 px-3 py-1.5 rounded-lg border border-white/5">
+          <div className="bg-slate-950 px-3 py-1.5 rounded-lg border border-white/5">
             <span className="text-xs text-slate-400 block mb-0.5">Registration ID</span>
             <span className="text-sm font-mono font-bold text-cyan-400">{patient.id}</span>
           </div>
@@ -104,8 +104,7 @@ export default function ECard({ patient, onDownload }) {
 
         {/* QR Code Container */}
         <div className="flex justify-center mb-8 relative">
-          <div className="absolute inset-0 bg-blue-500/20 blur-[40px] rounded-full pointer-events-none" />
-          <div className="bg-white p-3 rounded-2xl shadow-xl relative z-10 border-4 border-slate-900">
+          <div className="bg-white p-3 pb-2 rounded-2xl shadow-xl relative z-10 border-4 border-slate-900 flex flex-col items-center">
             <QRCodeCanvas 
               id="patient-qr"
               value={qrData} 
@@ -114,11 +113,14 @@ export default function ECard({ patient, onDownload }) {
               fgColor="#020617" 
               bgColor="#ffffff"
             />
+            <span className="text-[#020617] font-mono font-extrabold text-sm mt-2 tracking-widest">
+              {patient.id}
+            </span>
           </div>
         </div>
 
         {/* Latest Scan Status */}
-        <div className="bg-slate-900/50 rounded-2xl p-4 border border-white/5 mb-6">
+        <div className="bg-slate-950 rounded-2xl p-4 border border-white/5 mb-6">
           <div className="text-xs text-slate-400 mb-3 flex items-center justify-between">
             <span className="flex items-center gap-1"><Calendar className="w-3 h-3" /> Latest Scan</span>
             <span className="font-mono">{patient.lastScanDate || 'No scans yet'}</span>
@@ -153,11 +155,11 @@ export default function ECard({ patient, onDownload }) {
         <div className="flex gap-3">
           <button 
             onClick={handleDownload}
-            className="flex-1 flex items-center justify-center gap-2 py-2.5 bg-gradient-to-r from-blue-600/80 to-purple-600/80 hover:from-blue-600 hover:to-purple-600 border border-purple-500/30 rounded-xl text-white text-sm font-medium transition-all shadow-[0_0_15px_rgba(147,51,234,0.15)]"
+            className="flex-1 flex items-center justify-center gap-2 py-2.5 bg-gradient-to-r from-blue-600/80 to-purple-600/80 hover:from-blue-600 hover:to-purple-600 border border-purple-500/30 rounded-xl text-white text-sm font-medium transition-all shadow-[0_0_15px_rgba(147,51,234,0.15)] cursor-pointer"
           >
             <Download className="w-4 h-4" /> Download Card
           </button>
-          <button className="p-2.5 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl text-slate-300 transition-colors">
+          <button className="p-2.5 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl text-slate-300 transition-colors cursor-pointer">
             <Share2 className="w-4 h-4" />
           </button>
         </div>
